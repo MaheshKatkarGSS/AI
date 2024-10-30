@@ -4,17 +4,8 @@ from flask_accept import accept
 from google.cloud import speech
 from flask_cors import CORS
 from pydub import AudioSegment
-from websocket import Websocket
 import io
 import librosa
-
-
-class ConnectionMenager:
-    def __init__(self) :
-        self.active_connections:list[Websocket] =[]
-
-    async def connect (self,websocket:Websocket):
-        await websocket.accept()
 
 app =Flask(__name__)
 CORS(app,origins=["http://localhost:3000","http://localhost:3000"])
@@ -92,6 +83,8 @@ def transcript_byte_data():
         # for res in response.results:
         #     print(res.alternatives[0].transcript)
     return "uploded"
+
+
 
 
 
