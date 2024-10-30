@@ -10,8 +10,21 @@ from database import get_db
 from database import SessionLocal
 import uvicorn
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import select
 
-app = FastAPI(title='webSocketsex')
+app = FastAPI(title='webSocket')
+origins = [
+    "http://localhost:3000",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 #Database requirements
 models.Base.metadata.create_all(bind=engine)
 
@@ -113,6 +126,15 @@ async def create_questions(interview:InterviewBase,db=db_dependency):
     # db.add(instance=db_interview)
     db.commit()
     # print(db_interview)
+
+@app.get("/interview/")
+async def get_all_interviews(db=db_dependency):
+    db=SessionLocal()
+    stmt=select(models.Interview)
+    interviews=[]
+    for user in db.scalars(stmt):
+        interviews.append(user)
+    return interviews
 
 
 @app.get("/")
