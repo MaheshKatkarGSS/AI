@@ -4,6 +4,7 @@ import Transcriptions from "../views/Transcriptions";
 import AudioRecorder from "../AudioRecorder/AudioRecorder";
 import RecorderComponent from "../AudioRecorder/FlacRecorder";
 import RecordRtcRecorder from "../AudioRecorder/RecorRtcRecorder";
+import WebSocketImpl from "../websockets/WebSocket";
 
 function MainLayout() {
   const [response, setResponse] = useState("");
@@ -31,9 +32,10 @@ function MainLayout() {
         </Grid>
         <Grid md={3}>
           <Transcriptions response={response} />
-          <AudioRecorder />
-          <RecorderComponent />
+          {/* <AudioRecorder />
+          <RecorderComponent /> */}
           <RecordRtcRecorder setResponse={setResponse} />
+          <WebSocketImpl />
         </Grid>
       </Grid>
     </>
